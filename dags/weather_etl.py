@@ -92,8 +92,8 @@ def save_to_postgres(**context):
     
     try:
         conn = psycopg2.connect(
-            dbname='postgres', user='postgres', password='Aap7978Po', host='postgres001dev.postgres.database.azure.com'
-            #dbname='airflow', user='airflow', password='airflow', host='postgres'
+            #dbname='postgres', user='postgres', password='Aap7978Po', host='postgres001dev.postgres.database.azure.com'
+            dbname='airflow', user='airflow', password='airflow', host='postgres'
         )
         ##postgres001dev.postgres.database.azure.com
         print('###################################################')
