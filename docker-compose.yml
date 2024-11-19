@@ -11,8 +11,8 @@ services:
       - "5432:5432"
     volumes:
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
-    networks:
-      - airflow-network
+    # networks:
+    #   - airflow-network
 
   webserver:
     image: apache/airflow:2.2.3
@@ -25,11 +25,11 @@ services:
       - ./dags:/opt/airflow/dags    
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
     command: webserver
-    networks:
-      - airflow-network
+    # networks:
+    #   - airflow-network
 
 
   scheduler:
@@ -41,11 +41,11 @@ services:
       AIRFLOW__WEBSERVER__SECRET_KEY: 58d7e1bbf5c51d820a8fc73bc3ab2283
     volumes:
       - ./dags:/opt/airflow/dags
-    depends_on:
-      - postgres
+    # depends_on:
+    #   - postgres
     command: scheduler
-    networks:
-      - airflow-network
+    # networks:
+    #   - airflow-network
 
   init:
     image: apache/airflow:2.2.3
@@ -56,13 +56,13 @@ services:
       AIRFLOW__WEBSERVER__SECRET_KEY: 58d7e1bbf5c51d820a8fc73bc3ab2283
     volumes:
       - ./dags:/opt/airflow/dags
-    networks:
-      - airflow-network
-    depends_on:
-      - postgres
+    # networks:
+    #   - airflow-network
+    # depends_on:
+    #   - postgres
     command: bash -c "airflow db init && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com"
     
 
-networks:
-  airflow-network:
-    driver: bridge
+# networks:
+#   airflow-network:
+#     driver: bridge
