@@ -25,6 +25,11 @@ services:
       - ./dags:/opt/airflow/dags    
     ports:
       - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
     # depends_on:
     #   - postgres
     command: webserver
