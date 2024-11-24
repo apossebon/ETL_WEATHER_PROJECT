@@ -18,20 +18,15 @@ services:
     image: apache/airflow:2.2.3
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@ip-172-31-38-55.sa-east-1.compute.internal/airflow
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
       AIRFLOW__WEBSERVER__SECRET_KEY: 58d7e1bbf5c51d820a8fc73bc3ab2283
     volumes:
       - ./dags:/opt/airflow/dags    
     ports:
-      - "8080:8080"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 500M
-    # depends_on:
-    #   - postgres
+      - "8080:8080"    
+    depends_on:
+      - postgres
     command: webserver
     # networks:
     #   - airflow-network
@@ -41,13 +36,13 @@ services:
     image: apache/airflow:2.2.3
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@ip-172-31-38-55.sa-east-1.compute.internal/airflow
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
       AIRFLOW__WEBSERVER__SECRET_KEY: 58d7e1bbf5c51d820a8fc73bc3ab2283
     volumes:
       - ./dags:/opt/airflow/dags
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
     command: scheduler
     # networks:
     #   - airflow-network
@@ -56,15 +51,15 @@ services:
     image: apache/airflow:2.2.3
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@ip-172-31-38-55.sa-east-1.compute.internal:5432/airflow
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
       AIRFLOW__WEBSERVER__SECRET_KEY: 58d7e1bbf5c51d820a8fc73bc3ab2283
     volumes:
       - ./dags:/opt/airflow/dags
     # networks:
     #   - airflow-network
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
     command: bash -c "airflow db init && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com"
     
 
