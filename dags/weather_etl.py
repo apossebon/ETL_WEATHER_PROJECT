@@ -6,8 +6,9 @@ import psycopg2
 
 import requests
 from datetime import datetime, timezone
+from S3Handler import S3Handler  # Import S3Handler from the correct module
 
-from dags import S3Handler
+#from dags import S3Handler
 
 def extract_weather_data():
     try:
