@@ -7,6 +7,8 @@ import psycopg2
 import requests
 from datetime import datetime, timezone
 
+from dags import S3Handler
+
 def extract_weather_data():
     try:
         # Get the current date and time in UTC
@@ -79,6 +81,12 @@ def transform_weather_data(**context):
     print('###################################################')
     print(transformed_data)
     print('###################################################')
+    
+    s3_handler = S3Handler(bucket_name="possebonawsbucket1", region_name="sa-east-1")
+    nova_linha = ["nome", "idade", "cidade"]
+    s3_handler.append_csv_to_s3("arquivo.csv", nova_linha)
+
+
     
     return transformed_data
 
