@@ -1,5 +1,8 @@
 import boto3
-from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+from botocore.exceptions import NoCredentialsError
+import io
+import csv
+
 
 class S3Handler:
     def __init__(self, bucket_name, region_name=None):
